@@ -14,9 +14,9 @@ Skills Learned
 
 Tools Used
 
-- Security Information and Event Management (SIEM) system for log ingestion and analysis.
-- Network analysis tools (such as Wireshark) for capturing and examining network traffic.
-- Telemetry generation tools to create realistic network traffic and attack scenarios.
+- Splunk for log ingestion and analysis.
+- Suricata for capturing and examining network traffic.
+- Kali Linux and Atomic Red Team to create realistic network traffic and attack scenarios.
 
 Network Diagram
 
