@@ -20,4 +20,4 @@ Tools Used
 
 Network Diagram
 
-![detection_lab2](https://github.com/user-attachments/assets/8da4cccc-2476-4c27-b872-81f65c8cf027)
+![detection_lab2](https://github.com/user-attachments/assets/c5f14131-f48e-4ac4-922f-5e4a7c3a80cd)
