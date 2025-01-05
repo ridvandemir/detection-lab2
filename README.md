@@ -35,6 +35,8 @@ In this lab, I created LAN network in VirtualBox with ‘NAT Network’.
 - After all that, we saw that the virtual machines were reachable with the ‘ping’ command.
 
 2-Splunk
+- First, I changed the IP address to static IP.
+  - sudo nano /etc/netplan/00-installer-config.yaml
 - I installed Splunk and ran it.
 	- sudo dpkg -i <splunk .deb folder>
 	- sudo –u splunk bash #I switched to splunk user
@@ -43,8 +45,14 @@ In this lab, I created LAN network in VirtualBox with ‘NAT Network’.
   - sudo $SPLUNK_HOME/bin/splunk enable boot-start -user splunk
 
 3-Windows 10/Windows Server
-- First I changed the names of the machines.
-  - PC>Settings Windows 10 --> ‘target-PC’, Windows Server --> ‘ADDC01’
-
-- I then changed the IP address to static IP. 
-	- Internet Settings>Change Adapter Options>Ethernet>Properties>IPv4 Properties>Manual 
+- First, I changed the names of the machines.
+  - PC>Settings> Windows 10: ‘target-PC’, Windows Server: ‘ADDC01’
+- I then changed the IP address to static IP.
+  - Internet Settings>Change Adapter Options>Ethernet>Properties>IPv4 Properties>Manual
+- I installed Splunk Forwarder
+  - Receiving Server> Host/IP: 192.168.10.10, Port:9997
+- After downloading Sysmon, I downloaded the configuration file (olaf configuration) from github. To do the installation in Powershell, I went to the sysmon file path and entered the command. Since the configuration file is in the previous folder, I specified it with '..\' when entering the command.
+  - .\Sysmon64.exe -i ..\sysmonconfig.xml
+- For Universal Forwarder we need to create the 'inputs.conf' file under \etc\system\local and specify the metrics we want to log in inputs.conf.
+  - index=endpoint
+- We should also remember to create an 'endpoint' indexer on the Splunk machine and add port 9997.
