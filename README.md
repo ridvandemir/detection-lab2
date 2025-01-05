@@ -39,13 +39,13 @@ In this lab, I created LAN network in VirtualBox with ‘NAT Network’.
   - sudo nano /etc/netplan/00-installer-config.yaml
   - IP:192.168.10.10
 - I installed Splunk and ran it.
-	- sudo dpkg -i <splunk .deb folder>
-	- sudo –u splunk bash #I switched to splunk user
+  - sudo dpkg -i <splunk .deb folder>
+  - sudo –u splunk bash #I switched to splunk user
   - $SPLUNK_HOME/bin/splunk start –accept-license
 - I activated 'boot start'.
   - sudo $SPLUNK_HOME/bin/splunk enable boot-start -user splunk
 
-3-Windows 10/Windows Server
+3-Windows 10/Windows Server (AD)
 - First, I changed the names of the machines.
   - PC>Settings> Windows 10: ‘target-PC’, Windows Server: ‘ADDC01’
 - I then changed the IP address to static IP.
@@ -60,7 +60,7 @@ In this lab, I created LAN network in VirtualBox with ‘NAT Network’.
 - We should also remember to create an 'endpoint' indexer on the Splunk machine and add port 9997.
 
 4-Active Directory Installation/Configuration
-- After the Active Directory server installation, I assigned the server as a Domain Controller and after creating a user, I included the Windows 10 machine in this Domain.
+- First, I installed the Active Directory server, then I promoted the server to Domain Controller. After creating the users, I included the Windows 10 machine in this Domain.
 - For Active Directory installation
   - Server Manager>Manage>Add Roles and Features 
 	Installation Type> Role-Based or Feature-Based Installation 
@@ -75,7 +75,31 @@ In this lab, I created LAN network in VirtualBox with ‘NAT Network’.
 - After that I went to the Windows 10 machine and included it in the lab.local Domain. But what we need to do before that is to change the DNS server to AD server. The AD user and password must be entered when joining the domain.
   - PC>Properties>Advance System Settings>Computer Name>Change>Member of Domain: LAB.LOCAL
 
-5- Kali Linux
+5- IDP/IPS (Suricata)
+- First, I changed the IP address to static IP.
+  - sudo nano /etc/netplan/00-installer-config.yaml
+  - IP:192.168.10.9
+- I installed Suricata
+  - sudo apt-get install software-properties-common
+  - sudo add-apt-repository ppa:oisf/suricata-stable
+  - sudo apt-get update
+  - sudo apt-get install suricata
+- I made some changes in configuration file /etc/suricata/suricata.yaml
+  - address-group: [192.168.10.0/24]
+  - af-packet: enp0s3
+  - pcap: enp0s3
+  - community-id: true
+- I installed Splunk Forwarder and ran it.
+  - sudo dpkg -i <splunkforwarder .deb folder>
+  - sudo –u splunkfwd bash #I switched to splunkfwd user
+  - $SPLUNK_HOME/bin/splunk start –accept-license
+- I activated 'boot start'.
+  - sudo $SPLUNK_HOME/bin/splunk enable boot-start -user splunkfwd
+- To monitor the logs and send those to Splunk, I entered these commands with splunkfwd user.
+  - $SPLUNK_HOME/bin/splunk add forwarder-server 192.168.10.10:9997
+  - $SPLUNK_HOME/bin/splunk monitor /var/log/suricata
+
+6- Kali Linux/Brute-force attack
 - First, I changed the IP address to static IP.
   - Ethernet>sag tikla>Edit connections>Wired connection 1>Ayarlar>IPv4 Settings>Method Manual>Add
   - IP: 192.168.10.250
