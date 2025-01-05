@@ -21,3 +21,15 @@ Tools Used
 Network Diagram
 
 ![detection_lab2](https://github.com/user-attachments/assets/c5f14131-f48e-4ac4-922f-5e4a7c3a80cd)
+
+Steps
+
+In this lab, I created LAN network in VirtualBox with ‘NAT Network’. 
+
+1. Installation and Setup of Virtual Machines  
+- Kali Linux (attacker), Windows 10 (victim), Windows Server (AD), Ubuntu 22.04 (Suricata) and Ubuntu 22.04 (Splunk) were installed on VirtuelBox as virtual machines.  
+- Splunk Enterprise was installed on the Ubuntu machine to view logs.  
+- Universal Forwarder and Sysmon were installed on Windows 10 (victim) and Windows Server (AD) machine to send logs to Splunk. 
+- Also, Atomic Red Team was installed on Windows 10 (victim) to generate attack signatures. 
+- After selecting ‘NAT Network' as network, static IP address was determined on each virtual machine.  
+- After all that, we saw that the virtual machines were reachable with the ‘ping’ command. 
