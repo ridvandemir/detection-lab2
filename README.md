@@ -37,6 +37,7 @@ In this lab, I created LAN network in VirtualBox with ‘NAT Network’.
 2-Splunk
 - First, I changed the IP address to static IP.
   - sudo nano /etc/netplan/00-installer-config.yaml
+  - IP:192.168.10.10
 - I installed Splunk and ran it.
 	- sudo dpkg -i <splunk .deb folder>
 	- sudo –u splunk bash #I switched to splunk user
@@ -49,6 +50,7 @@ In this lab, I created LAN network in VirtualBox with ‘NAT Network’.
   - PC>Settings> Windows 10: ‘target-PC’, Windows Server: ‘ADDC01’
 - I then changed the IP address to static IP.
   - Internet Settings>Change Adapter Options>Ethernet>Properties>IPv4 Properties>Manual
+  - Windows 10 IP:192.168.10.100, Windows Server IP:192.168.10.7
 - I installed Splunk Forwarder
   - Receiving Server> Host/IP: 192.168.10.10, Port:9997
 - After downloading Sysmon, I downloaded the configuration file (olaf configuration) from github. To do the installation in Powershell, I went to the sysmon file path and entered the command. Since the configuration file is in the previous folder, I specified it with '..\' when entering the command.
@@ -56,3 +58,38 @@ In this lab, I created LAN network in VirtualBox with ‘NAT Network’.
 - For Universal Forwarder we need to create the 'inputs.conf' file under \etc\system\local and specify the metrics we want to log in inputs.conf.
   - index=endpoint
 - We should also remember to create an 'endpoint' indexer on the Splunk machine and add port 9997.
+
+4-Active Directory Installation/Configuration
+- After the Active Directory server installation, I assigned the server as a Domain Controller and after creating a user, I included the Windows 10 machine in this Domain.
+- For Active Directory installation
+  - Server Manager>Manage>Add Roles and Features 
+	Installation Type> Role-Based or Feature-Based Installation 
+	Server Selection> ADDC01 
+	Server Roles> AD Domain Services 
+- To Promote Server to Domain Controller
+  - Server Manager>from open flag 
+	Deployement Configuration> Add a new forest (Root Domain Name: lab.local) 
+	Domain Controller Options> Password creation
+- To create a user, I created an Organizational Unit under IT and HR and then created a user under each of them.
+  - Server Manager>Tools>AD Users and Computers>lab.local>right click>New>Organizational Unit>IT/HR>right click>New>User
+- After that I went to the Windows 10 machine and included it in the lab.local Domain. But what we need to do before that is to change the DNS server to AD server. The AD user and password must be entered when joining the domain.
+  - PC>Properties>Advance System Settings>Computer Name>Change>Member of Domain: LAB.LOCAL
+
+5- Kali Linux
+- First, I changed the IP address to static IP.
+  - Ethernet>sag tikla>Edit connections>Wired connection 1>Ayarlar>IPv4 Settings>Method Manual>Add
+  - IP: 192.168.10.250
+- I created a folder called 'ad-project' and put the work there.
+- I downloaded 'crowbar' for brute-force attack.
+  - sudo apt-get install -y crowbar
+- I opened the /usr/share/wordlists/rockyou.txt.gz file and copied it to the 'ad-project' folder.
+  - sudo gunzip rockyou.txt.gz
+  - cp rockyou.txt ~/Desktop/ad-project
+- Since the file is very large, I used the first 100 word list and added the user password I created to the 'password.txt' file.
+  - head -n 100 rockyou.txt > password.txt
+  - nano password.txt
+- After that we have to activate RDP port 3389 on the Windows 10 (target-PC) machine.
+  - PC>Properties>Advance System Settings>System Properties>Remote>Remote Desktop>Allow remote connections to this computer>Select Users>Add>
+- Finally, I launched a brute-force attack with 'crowbar' in Kali Linux.
+  - crowbar -b rdp -u <user> -C password.txt -s 192.168.10.100/32
+
