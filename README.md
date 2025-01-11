@@ -15,8 +15,8 @@ Skills Learned
 Tools Used
 
 - Splunk for log ingestion and analysis.
-- Suricata for capturing and examining network traffic.
-- Kali Linux and Atomic Red Team to create realistic network traffic and attack scenarios.
+- Suricata for capturing network traffic.
+- Kali Linux and Atomic Red Team to create telemetry in Splunk.
 
 Network Diagram
 
