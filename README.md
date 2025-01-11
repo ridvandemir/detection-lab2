@@ -118,3 +118,13 @@ In this lab, I created LAN network in VirtualBox with ‘NAT Network’.
 - Finally, I launched a brute-force attack with 'crowbar' in Kali Linux.
   - crowbar -b rdp -u <user> -C password.txt -s 192.168.10.100/32
 
+7- Atomic Red Team
+- First, I ran the Powershell as Administrator
+- To install the Atomic Red Team
+  - Set-ExecutionPolicy Bypass CurrentUser
+  - I excluded C:\ drive from Windows Defender not to be detected
+  - Install commands;
+    - IEX (IWR 'https://raw.githubusercontent.com/redcanaryco/invoke-atomicredteam/master/install-atomicredteam.ps1' -UseBasicParsing);
+    - Install-AtomicRedTeam -getAtomics
+- After installing, I tried some attacks to see the telemetry in Splunk. For example;
+  - Invoke-AtomicTest T1136.001. I created NewLocalUser and saw that in Splunk.
