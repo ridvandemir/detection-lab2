@@ -29,7 +29,7 @@ In this lab, I created LAN network in VirtualBox with ‘NAT Network’.
 1-Installation and Setup of Virtual Machines
 - Kali Linux (attacker), Windows 10 (victim), Windows Server (AD), Ubuntu 22.04 (Suricata) and Ubuntu 22.04 (Splunk) were installed on VirtuelBox as virtual machines.
 - As a network ‘NAT Network' was selected and static IP address was determined on each virtual machine.
-- After installing virtual machines, we saw that they were reachable with the ‘ping’ command.
+- After installing virtual machines, I saw that they were reachable with the ‘ping’ command.
 - Splunk Enterprise was installed on the Ubuntu machine to view logs.
 - Universal Forwarder and Sysmon were installed on Windows 10 (victim) and Windows Server (AD) machine to send logs to Splunk.
 - Also, Atomic Red Team was installed on Windows 10 (victim) to generate attack signatures.
@@ -40,7 +40,7 @@ In this lab, I created LAN network in VirtualBox with ‘NAT Network’.
   - sudo nano /etc/netplan/00-installer-config.yaml
   - IP:192.168.10.10
 - I installed Splunk and ran it.
-  - sudo dpkg -i <splunk .deb folder>
+  - sudo dpkg -i <splunk.deb folder>
   - sudo –u splunk bash #I switched to splunk user
   - $SPLUNK_HOME/bin/splunk start –accept-license
 - I activated 'boot start'.
@@ -91,7 +91,7 @@ In this lab, I created LAN network in VirtualBox with ‘NAT Network’.
   - pcap: enp0s3
   - community-id: true
 - I installed Splunk Forwarder and ran it.
-  - sudo dpkg -i <splunkforwarder .deb folder>
+  - sudo dpkg -i <splunkforwarder.deb folder>
   - sudo –u splunkfwd bash #I switched to splunkfwd user
   - $SPLUNK_HOME/bin/splunk start –accept-license
 - I activated 'boot start'.
