@@ -15,7 +15,7 @@ Skills Learned
 Tools Used
 
 - Splunk for log ingestion and analysis.
-- Suricata for capturing network traffic.
+- Suricata for capturing network anomalies.
 - Kali Linux and Atomic Red Team to create telemetry in Splunk.
 
 Network Diagram
@@ -99,11 +99,14 @@ In this lab, I created LAN network in VirtualBox with ‘NAT Network’.
 - To monitor the logs and send those to Splunk, I entered these commands with splunkfwd user.
   - $SPLUNK_HOME/bin/splunk add forwarder-server 192.168.10.10:9997
   - $SPLUNK_HOME/bin/splunk monitor /var/log/suricata
+- I configured /etc/s­uri­cat­a/r­ule­s/local.rules to detect the port scaning.
 
 6- Kali Linux/Brute-force attack
 - First, I changed the IP address to static IP.
   - Ethernet>sag tikla>Edit connections>Wired connection 1>Ayarlar>IPv4 Settings>Method Manual>Add
   - IP: 192.168.10.250
+- I did a port scan with 'nmap' to see how IDS create telemetry.
+  - nmap 192.168.10.100 -A -Pn 
 - I created a folder called 'ad-project' and put the work there.
 - I downloaded 'crowbar' for brute-force attack.
   - sudo apt-get install -y crowbar
