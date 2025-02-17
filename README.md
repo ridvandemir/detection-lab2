@@ -103,7 +103,7 @@ In this lab, I created LAN network in VirtualBox with ‘NAT Network’.
 
 6- Kali Linux/Brute-force attack
 - First, I changed the IP address to static IP.
-  - Ethernet>sag tikla>Edit connections>Wired connection 1>Ayarlar>IPv4 Settings>Method Manual>Add
+  - Ethernet>right click>Edit connections>Wired connection 1>Settings>IPv4 Settings>Method Manual>Add
   - IP: 192.168.10.250
 - I did a port scan with 'nmap' to see how IDS create telemetry.
   - nmap 192.168.10.100 -A -Pn 
